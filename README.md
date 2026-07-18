@@ -19,7 +19,7 @@ Then visit [http://localhost:4173](http://localhost:4173).
 | Current % / Target % | Where you start and stop |
 | Battery capacity (kWh) | Pack size used for energy math |
 | Charge speed (kW) | Charger power (presets for L1 / L2 / DCFC) |
-| Energy cost ($/kWh) | Rate for session cost |
+| Energy cost (RM/kWh) | Rate for session cost (MYR) |
 | Efficiency (mi/kWh, optional) | Unlocks range added & cost per mile |
 
 ## Outputs
