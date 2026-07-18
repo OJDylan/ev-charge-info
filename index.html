@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ChargeSpan — know how long your charge takes, what it costs, and how much energy you add."
+    />
+    <title>ChargeSpan — Charge Duration Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true">
+      <div class="orb orb-a"></div>
+      <div class="orb orb-b"></div>
+      <div class="grid-wash"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="ChargeSpan home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">ChargeSpan</span>
+      </a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <p class="brand-lockup">ChargeSpan</p>
+        <h1>How long until you’re topped up?</h1>
+        <p class="lede">
+          Enter your battery and charger details. We’ll give you duration, cost,
+          and energy delivered—live as you type.
+        </p>
+
+        <form class="calc" id="calc-form" novalidate>
+          <div class="field-grid">
+            <label class="field">
+              <span class="field-label">Current %</span>
+              <input
+                id="current"
+                name="current"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                max="100"
+                step="1"
+                value="20"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span class="field-label">Target %</span>
+              <input
+                id="target"
+                name="target"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                max="100"
+                step="1"
+                value="80"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span class="field-label">Battery capacity</span>
+              <span class="input-with-unit">
+                <input
+                  id="capacity"
+                  name="capacity"
+                  type="number"
+                  inputmode="decimal"
+                  min="0.1"
+                  step="0.1"
+                  value="75"
+                  required
+                />
+                <span class="unit">kWh</span>
+              </span>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Charge speed</span>
+              <span class="input-with-unit">
+                <input
+                  id="speed"
+                  name="speed"
+                  type="number"
+                  inputmode="decimal"
+                  min="0.1"
+                  step="0.1"
+                  value="11"
+                  required
+                />
+                <span class="unit">kW</span>
+              </span>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Energy cost</span>
+              <span class="input-with-unit">
+                <input
+                  id="rate"
+                  name="rate"
+                  type="number"
+                  inputmode="decimal"
+                  min="0"
+                  step="0.01"
+                  value="0.16"
+                  required
+                />
+                <span class="unit">$/kWh</span>
+              </span>
+            </label>
+
+            <label class="field">
+              <span class="field-label">Efficiency <span class="optional">(optional)</span></span>
+              <span class="input-with-unit">
+                <input
+                  id="efficiency"
+                  name="efficiency"
+                  type="number"
+                  inputmode="decimal"
+                  min="0"
+                  step="0.1"
+                  value="3.5"
+                  placeholder="e.g. 3.5"
+                />
+                <span class="unit">mi/kWh</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="presets" role="group" aria-label="Common charger speeds">
+            <span class="presets-label">Quick speed</span>
+            <button type="button" class="chip" data-speed="1.4">L1 · 1.4 kW</button>
+            <button type="button" class="chip" data-speed="7.2">L2 · 7.2 kW</button>
+            <button type="button" class="chip is-active" data-speed="11">L2 · 11 kW</button>
+            <button type="button" class="chip" data-speed="50">DCFC · 50 kW</button>
+            <button type="button" class="chip" data-speed="150">DCFC · 150 kW</button>
+          </div>
+
+          <p class="form-note" id="form-error" hidden></p>
+        </form>
+      </section>
+
+      <section class="results" id="results" aria-live="polite">
+        <div class="results-head">
+          <h2>Your charge session</h2>
+          <p class="results-sub" id="session-summary">
+            Filling from 20% to 80% on a 75 kWh pack.
+          </p>
+        </div>
+
+        <div class="battery-visual" aria-hidden="true">
+          <div class="battery-track">
+            <div class="battery-fill current" id="fill-current"></div>
+            <div class="battery-fill gain" id="fill-gain"></div>
+          </div>
+          <div class="battery-labels">
+            <span id="label-current">20%</span>
+            <span id="label-gain">+60%</span>
+            <span id="label-target">80%</span>
+          </div>
+        </div>
+
+        <div class="metric-spotlight">
+          <article class="metric primary">
+            <p class="metric-label">Duration</p>
+            <p class="metric-value" id="out-duration">4h 5m</p>
+            <p class="metric-hint" id="out-finish">Done around 3:26 PM if you start now</p>
+          </article>
+          <article class="metric primary">
+            <p class="metric-label">Session cost</p>
+            <p class="metric-value" id="out-cost">$7.20</p>
+            <p class="metric-hint" id="out-cost-detail">at $0.16 / kWh</p>
+          </article>
+          <article class="metric primary">
+            <p class="metric-label">Energy delivered</p>
+            <p class="metric-value" id="out-energy">45.0 kWh</p>
+            <p class="metric-hint" id="out-energy-detail">60 percentage points</p>
+          </article>
+        </div>
+
+        <div class="metric-row" id="extra-metrics">
+          <article class="metric">
+            <p class="metric-label">Charge rate</p>
+            <p class="metric-value sm" id="out-pct-rate">14.7%/h</p>
+          </article>
+          <article class="metric">
+            <p class="metric-label">Cost per %</p>
+            <p class="metric-value sm" id="out-cost-per-pct">$0.12</p>
+          </article>
+          <article class="metric">
+            <p class="metric-label">Range added</p>
+            <p class="metric-value sm" id="out-range">158 mi</p>
+          </article>
+          <article class="metric">
+            <p class="metric-label">Cost per mile</p>
+            <p class="metric-value sm" id="out-cost-per-mi">$0.05</p>
+          </article>
+          <article class="metric">
+            <p class="metric-label">Time to +10%</p>
+            <p class="metric-value sm" id="out-ten">41m</p>
+          </article>
+          <article class="metric">
+            <p class="metric-label">Overnight fit</p>
+            <p class="metric-value sm" id="out-overnight">Yes · 8h window</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Assumes a constant charge rate. Real packs taper near full, especially on
+        DC fast chargers—treat high-SOC estimates as optimistic.
+      </p>
+    </footer>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
