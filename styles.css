@@ -220,11 +220,6 @@ main,
   color: var(--ink-soft);
 }
 
-.optional {
-  font-weight: 500;
-  color: var(--muted);
-}
-
 input[type="number"] {
   width: 100%;
   appearance: textfield;

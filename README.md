@@ -20,7 +20,6 @@ Then visit [http://localhost:4173](http://localhost:4173).
 | Battery capacity (kWh) | Pack size used for energy math |
 | Charge speed (kW) | Charger power (presets for L1 / L2 / DCFC) |
 | Energy cost (RM/kWh) | Rate for session cost (MYR) |
-| Efficiency (mi/kWh, optional) | Unlocks range added & cost per mile |
 
 ## Outputs
 
@@ -28,6 +27,5 @@ Then visit [http://localhost:4173](http://localhost:4173).
 - Session cost and energy delivered (kWh)
 - Charge rate (%/hour), cost per %, time to +10%
 - Overnight fit check (8-hour window)
-- Range added and cost per mile when efficiency is set
 
 Assumes a constant charge rate. Real packs taper near full, especially on DC fast chargers.

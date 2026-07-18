@@ -5,7 +5,6 @@ const els = {
   capacity: document.getElementById("capacity"),
   speed: document.getElementById("speed"),
   rate: document.getElementById("rate"),
-  efficiency: document.getElementById("efficiency"),
   error: document.getElementById("form-error"),
   results: document.getElementById("results"),
   sessionSummary: document.getElementById("session-summary"),
@@ -22,8 +21,6 @@ const els = {
   outEnergyDetail: document.getElementById("out-energy-detail"),
   outPctRate: document.getElementById("out-pct-rate"),
   outCostPerPct: document.getElementById("out-cost-per-pct"),
-  outRange: document.getElementById("out-range"),
-  outCostPerMi: document.getElementById("out-cost-per-mi"),
   outTen: document.getElementById("out-ten"),
   outOvernight: document.getElementById("out-overnight"),
 };
@@ -91,7 +88,6 @@ function compute() {
   const capacity = readNumber(els.capacity);
   const speed = readNumber(els.speed);
   const rate = readNumber(els.rate);
-  const efficiency = readNumber(els.efficiency);
 
   const errors = [];
   if (!Number.isFinite(current) || current < 0 || current > 100) {
@@ -131,10 +127,6 @@ function compute() {
   const pctPerHour = speed > 0 ? (speed / capacity) * 100 : 0;
   const costPerPct = pctGain > 0 ? sessionCost / pctGain : 0;
   const hoursForTen = pctPerHour > 0 ? 10 / pctPerHour : Infinity;
-  const hasEfficiency = Number.isFinite(efficiency) && efficiency > 0;
-  const rangeAdded = hasEfficiency ? energyKWh * efficiency : null;
-  const costPerMi =
-    hasEfficiency && rangeAdded > 0 ? sessionCost / rangeAdded : null;
 
   const overnightWindowHours = 8;
   let overnightText = "—";
@@ -169,11 +161,6 @@ function compute() {
 
   els.outPctRate.textContent = `${formatNumber(pctPerHour, 1)}%/h`;
   els.outCostPerPct.textContent = moneyExact.format(costPerPct);
-  els.outRange.textContent = hasEfficiency
-    ? `${formatNumber(rangeAdded, 0)} mi`
-    : "Add efficiency";
-  els.outCostPerMi.textContent =
-    costPerMi != null ? moneyExact.format(costPerMi) : "—";
   els.outTen.textContent = formatDuration(hoursForTen);
   els.outOvernight.textContent = overnightText;
 }
