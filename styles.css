@@ -322,6 +322,7 @@ input[type="number"]:focus {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+  justify-content: center;
   justify-content: safe center;
   gap: 0.45rem;
   margin-inline: -0.15rem;
