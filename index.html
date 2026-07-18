@@ -2,7 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#eef5f3" />
+    <meta name="color-scheme" content="light" />
     <meta
       name="description"
       content="ChargeSpan — know how long your charge takes, what it costs, and how much energy you add."
@@ -142,11 +147,13 @@
 
           <div class="presets" role="group" aria-label="Common charger speeds">
             <span class="presets-label">Quick speed</span>
-            <button type="button" class="chip" data-speed="1.4">L1 · 1.4 kW</button>
-            <button type="button" class="chip" data-speed="7.2">L2 · 7.2 kW</button>
-            <button type="button" class="chip is-active" data-speed="11">L2 · 11 kW</button>
-            <button type="button" class="chip" data-speed="50">DCFC · 50 kW</button>
-            <button type="button" class="chip" data-speed="150">DCFC · 150 kW</button>
+            <div class="preset-chips">
+              <button type="button" class="chip" data-speed="1.4">L1 · 1.4 kW</button>
+              <button type="button" class="chip" data-speed="7.2">L2 · 7.2 kW</button>
+              <button type="button" class="chip is-active" data-speed="11">L2 · 11 kW</button>
+              <button type="button" class="chip" data-speed="50">DCFC · 50 kW</button>
+              <button type="button" class="chip" data-speed="150">DCFC · 150 kW</button>
+            </div>
           </div>
 
           <p class="form-note" id="form-error" hidden></p>
