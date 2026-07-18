@@ -28,16 +28,16 @@ const els = {
   outOvernight: document.getElementById("out-overnight"),
 };
 
-const money = new Intl.NumberFormat(undefined, {
+const money = new Intl.NumberFormat("en-MY", {
   style: "currency",
-  currency: "USD",
+  currency: "MYR",
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
 
-const moneyExact = new Intl.NumberFormat(undefined, {
+const moneyExact = new Intl.NumberFormat("en-MY", {
   style: "currency",
-  currency: "USD",
+  currency: "MYR",
   minimumFractionDigits: 2,
   maximumFractionDigits: 4,
 });
